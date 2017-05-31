@@ -1,0 +1,16 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": "6.10.3",
+  "author": "Bohdan Basov",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}

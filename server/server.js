@@ -12,17 +12,18 @@ const io = socket(server);
 
 io.on('connection', (socket) => {
     console.log('New user connected');
-    socket.on('disconnect', (socket) => {
-        console.log('User disconnected');
-    });
-    socket.emit('newMessage', {
-        from: 'mike@example.com',
-        text: 'test',
-        createdAt: 123
+    
+    socket.on('createMessage', (message) => {
+        console.log(message);
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date
+        });
     });
     
-    socket.on('createMessage', (newMessage) => {
-        console.log(newMessage);
+    socket.on('disconnect', (socket) => {
+        console.log('User disconnected');
     });
 });
 

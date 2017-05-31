@@ -15,6 +15,15 @@ io.on('connection', (socket) => {
     socket.on('disconnect', (socket) => {
         console.log('User disconnected');
     });
+    socket.emit('newMessage', {
+        from: 'mike@example.com',
+        text: 'test',
+        createdAt: 123
+    });
+    
+    socket.on('createMessage', (newMessage) => {
+        console.log(newMessage);
+    });
 });
 
 app.use(express.static(path.join(__dirname, '../public')));

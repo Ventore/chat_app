@@ -1,3 +1,4 @@
+/* global io */
 var socket = io();
         
 socket.on('connect', function(msg) {

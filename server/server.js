@@ -12,14 +12,11 @@ const server = http.createServer(app);
 const io = socket(server);
 
 io.on('connection', (socket) => {
-    console.log('New user connected');
+    socket.emit('newMessage', generateMessage('Welcome to the Chat App', 'Admin'));
     
-    socket.emit('new user', generateMessage('Welcome to the Chat App', 'Admin'));
-    
-    socket.broadcast.emit('new user', generateMessage('New user joined chat', 'Admin'));
+    socket.broadcast.emit('newMessage', generateMessage('New user joined chat', 'Admin'));
     
     socket.on('createMessage', (message) => {
-        console.log(message);
         io.emit('newMessage', generateMessage(message.text, message.from));
     });
     

@@ -14,6 +14,19 @@ socket.on('new user', function(message){
 })
 
 socket.on('newMessage', function(message) {
-    console.log(message);
+    var li = $('<li></li>');
+    li.text(`${message.from}: ${message.text}`);
+    $('#chat').append(li);
 });
 
+/* global $ */
+$("#message-form").on('submit', function(event) {
+    event.preventDefault();
+    socket.emit('createMessage', {
+        from: 'User',
+        text: $('[name=message]').val()
+    }, function() {
+        
+    });
+    $('[name=message]').val('');
+});

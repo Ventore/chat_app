@@ -30,3 +30,23 @@ $("#message-form").on('submit', function(event) {
     });
     $('[name=message]').val('');
 });
+
+
+var locationButton = $('#send-location');
+
+/* global navigator */
+if("geolocation" in navigator){
+    locationButton.on('click', function(e) {
+        navigator.geolocation.getCurrentPosition(function(possition) {
+            console.log(possition.coords); 
+            socket.emit('createLocationMessage', {
+                latitude: possition.coords.latitude,
+                longitude: possition.coords.longitude
+            });
+        }, function(err) {
+            alert('Unable to fetch possition ' + err);    
+        });
+    });    
+} else {
+    locationButton.prop('disabled', true);
+}

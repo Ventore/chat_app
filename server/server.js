@@ -16,12 +16,18 @@ io.on('connection', (socket) => {
     
     socket.broadcast.emit('newMessage', generateMessage('New user joined chat', 'Admin'));
     
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         io.emit('newMessage', generateMessage(message.text, message.from));
+        callback('This is from server');
+    });
+    
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newMessage', generateMessage('Admin', `${coords.longitude}, ${coords.latitude}`))        
     });
     
     socket.on('disconnect', (socket) => {
         console.log('User disconnected');
+        io.emit('newMessage', generateMessage('User has left chat', 'Admin'));
     });
 });
 

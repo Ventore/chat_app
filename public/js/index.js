@@ -1,4 +1,5 @@
 /* global io */
+/* global moment */
 var socket = io();
         
 socket.on('connect', function(msg) {
@@ -14,15 +15,17 @@ socket.on('new user', function(message){
 });
 
 socket.on('newMessage', function(message) {
+    var formattedTime = moment(message.createdAt).format('h:mm a');
     var li = $('<li></li>');
-    li.text(`${message.from}: ${message.text}`);
+    li.text(`${message.from} at ${formattedTime}: ${message.text}`);
     $('#chat').append(li);
 });
 
 socket.on('newLocationMessage', function(message) {
+    var formattedTime = moment(message.createdAt).format('h:mm a');
     var li = $('<li></li>');
     var a = $('<a target="_blank">My current location</a>');
-    li.text(`${message.from}: `);
+    li.text(`${message.from} at ${formattedTime}: `);
     a.attr('href', message.url);
     li.append(a);
     $('#chat').append(li);

@@ -20,11 +20,19 @@ function scrollToButton () {
 }
 
 socket.on('connect', function(msg) {
-    console.log('Connected!');
+    var params = $.deparam(window.location.search);
+    socket.emit('join', params, function(err) {
+        if(err) {
+            alert(err);
+            window.location.href = '/';
+        } else {
+            console.log('No errors');    
+        }       
+    });
 });
 
 socket.on('disconnect', function() {
-    console.log('Disconnected!');    
+
 });
 
 socket.on('new user', function(message){
